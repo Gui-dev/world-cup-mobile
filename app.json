@@ -2,6 +2,7 @@
   "expo": {
     "name": "world-cup",
     "slug": "world-cup",
+    "scheme": "world-cup",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
