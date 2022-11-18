@@ -6,7 +6,7 @@ import Logo from './../assets/logo.svg'
 import { useAuth } from '../hooks/useAuth'
 
 export const SignIn = () => {
-  const { signIn } = useAuth()
+  const { isUserLoading, signIn } = useAuth()
 
   return (
     <Center
@@ -19,9 +19,12 @@ export const SignIn = () => {
         title="ENTRAR COM O GOOGLE"
         type="SECONDARY"
         leftIcon={<Icon as={Fontisto} name="google" color="white" size="md" />}
-        isLoading={false}
+        isLoading={isUserLoading}
         mt={12}
         onPress={signIn}
+        _loading={{
+          _spinner: { color: 'white' }
+        }}
       />
       <Text
         textAlign="center"
