@@ -1,3 +1,4 @@
+import { Box } from 'native-base'
 import { NavigationContainer } from '@react-navigation/native'
 
 import { useAuth } from '../hooks/useAuth'
@@ -8,12 +9,14 @@ export const Routes = () => {
   const { user } = useAuth()
 
   return (
-    <NavigationContainer>
-      {
-        user
-          ? <AppRoutes />
-          : <SignIn />
-      }
-    </NavigationContainer>
+    <Box flex={1} bg="gray.900">
+      <NavigationContainer>
+        {
+          user
+            ? <AppRoutes />
+            : <SignIn />
+        }
+      </NavigationContainer>
+    </Box>
   )
 }
