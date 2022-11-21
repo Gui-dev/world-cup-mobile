@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { FlatList, Icon, useToast, VStack } from 'native-base'
 import { Octicons } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 
 import { api } from '../services/api'
 
@@ -39,9 +39,9 @@ export const Pools = () => {
     }
   }, [toast])
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     handleFetchPools()
-  }, [handleFetchPools])
+  }, [handleFetchPools]))
 
   return (
     <VStack flex={1} bg="gray.900">
