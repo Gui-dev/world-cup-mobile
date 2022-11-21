@@ -39,6 +39,10 @@ export const Pools = () => {
     }
   }, [toast])
 
+  const handleNavigationToDetails = (id: string) => {
+    navigate('details', { id })
+  }
+
   useFocusEffect(useCallback(() => {
     handleFetchPools()
   }, [handleFetchPools]))
@@ -62,7 +66,10 @@ export const Pools = () => {
             keyExtractor={item => item.id}
             renderItem={({ item }) => {
               return (
-                <PoolCard data={item} />
+                <PoolCard
+                  data={item}
+                  onPress={() => handleNavigationToDetails(item.id)}
+                />
               )
             }}
             ListEmptyComponent={() => {
