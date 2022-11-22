@@ -85,7 +85,7 @@ export const Details = () => {
               />
             </HStack>
           </VStack>
-          : <EmptyMyPoolList code={poolDetails.code} />
+          : <EmptyMyPoolList code={poolDetails.code} onShare={handleCodeShare} />
       }
     </VStack>
   )
