@@ -1,6 +1,6 @@
-import { Image, IImageProps } from 'native-base';
+import { Image, IImageProps } from 'native-base'
 
-export function Flag({ ...rest }: IImageProps) {
+export function Flag ({ ...rest }: IImageProps) {
   return (
     <Image
       {...rest}
@@ -9,5 +9,5 @@ export function Flag({ ...rest }: IImageProps) {
       h={6}
       mx={3}
     />
-  );
+  )
 }

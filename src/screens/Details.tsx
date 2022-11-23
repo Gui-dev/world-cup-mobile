@@ -11,6 +11,7 @@ import { Loading } from '../components/Loading'
 import { PoolHeader } from '../components/PoolHeader'
 import { EmptyMyPoolList } from './../components/EmptyMyPoolList'
 import { Option } from '../components/Option'
+import { Guesses } from '../components/Guesses'
 
 type RouteParams = {
   id: string
@@ -84,6 +85,7 @@ export const Details = () => {
                 onPress={() => setOptionSelected('ranking')}
               />
             </HStack>
+            <Guesses poolId={poolDetails.id} />
           </VStack>
           : <EmptyMyPoolList code={poolDetails.code} onShare={handleCodeShare} />
       }
