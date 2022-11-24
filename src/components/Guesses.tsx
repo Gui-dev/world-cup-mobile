@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Box, useToast } from 'native-base'
+import { FlatList, useToast } from 'native-base'
 
 import { api } from '../services/api'
 
@@ -12,6 +12,8 @@ interface Props {
 
 export const Guesses = ({ poolId }: Props) => {
   const [isLoading, setIsLoading] = useState(true)
+  const [firstTeamPoints, setFirstTeamPoints] = useState('')
+  const [secondTeamPoints, setSecondTeamPoints] = useState('')
   const [games, setGames] = useState<GameProps[]>([])
   const toast = useToast()
 
@@ -34,6 +36,39 @@ export const Guesses = ({ poolId }: Props) => {
     }
   }, [poolId, toast])
 
+  const handleGuessConfirm = async (gameId: string) => {
+    try {
+      if (!firstTeamPoints.trim() || !secondTeamPoints.trim()) {
+        toast.show({
+          title: 'Opssss',
+          description: 'Informe o placar do palpite',
+          placement: 'top',
+          bgColor: 'red.5000'
+        })
+        return
+      }
+      await api.post(`/pools/${poolId}/games/${gameId}/guesses`, {
+        firstTeamPoints: Number(firstTeamPoints),
+        secondTeamPoints: Number(secondTeamPoints)
+      })
+      toast.show({
+        title: 'Sucesso',
+        description: 'Palpite realizado',
+        placement: 'top',
+        bgColor: 'green.5000'
+      })
+      fetchGames()
+    } catch (error) {
+      console.log(error)
+      toast.show({
+        title: 'Buuuuu',
+        description: 'Não foi possível enviar o palpite',
+        placement: 'top',
+        bgColor: 'red.5000'
+      })
+    }
+  }
+
   useEffect(() => {
     fetchGames()
   }, [fetchGames])
@@ -44,9 +79,22 @@ export const Guesses = ({ poolId }: Props) => {
     )
   }
 
-  return (
-    <Box>
+  console.log('GAMES: ', games)
 
-    </Box>
+  return (
+    <FlatList
+      data={games}
+      keyExtractor={item => item.id}
+      renderItem={({ item }) => {
+        return (
+          <Game
+            data={item}
+            setFirstTeamPoints={setFirstTeamPoints}
+            setSecondTeamPoints={setSecondTeamPoints}
+            onGuessConfirm={() => handleGuessConfirm(item.id)}
+          />
+        )
+      }}
+    />
   )
 }
