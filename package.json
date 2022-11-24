@@ -39,6 +39,8 @@
     "@types/country-list": "^2.1.1",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
+    "babel-plugin-inline-dotenv": "^1.7.0",
+    "dotenv": "^16.0.3",
     "eslint": "^8.0.1",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.25.2",
