@@ -1,16 +1,19 @@
 import { useCallback, useEffect, useState } from 'react'
+import { Share } from 'react-native'
 import { FlatList, useToast } from 'native-base'
 
 import { api } from '../services/api'
 
 import { Loading } from './Loading'
 import { Game, GameProps } from './Game'
+import { EmptyMyPoolList } from './EmptyMyPoolList'
 
 interface Props {
-  poolId: string;
+  poolId: string
+  code: string
 }
 
-export const Guesses = ({ poolId }: Props) => {
+export const Guesses = ({ poolId, code }: Props) => {
   const [isLoading, setIsLoading] = useState(true)
   const [firstTeamPoints, setFirstTeamPoints] = useState('')
   const [secondTeamPoints, setSecondTeamPoints] = useState('')
@@ -21,7 +24,6 @@ export const Guesses = ({ poolId }: Props) => {
     try {
       setIsLoading(true)
       const { data } = await api.get(`/pools/${poolId}/games`)
-      console.log('GAMES', data.games)
       setGames(data.games)
     } catch (error) {
       console.log(error)
@@ -69,6 +71,13 @@ export const Guesses = ({ poolId }: Props) => {
     }
   }
 
+  const handleCodeShare = async () => {
+    await Share.share({
+      title: 'Código para participar do bolão',
+      message: code
+    })
+  }
+
   useEffect(() => {
     fetchGames()
   }, [fetchGames])
@@ -78,8 +87,6 @@ export const Guesses = ({ poolId }: Props) => {
       <Loading />
     )
   }
-
-  console.log('GAMES: ', games)
 
   return (
     <FlatList
@@ -93,6 +100,11 @@ export const Guesses = ({ poolId }: Props) => {
             setSecondTeamPoints={setSecondTeamPoints}
             onGuessConfirm={() => handleGuessConfirm(item.id)}
           />
+        )
+      }}
+      ListEmptyComponent={() => {
+        return (
+          <EmptyMyPoolList code={code} onShare={handleCodeShare} />
         )
       }}
     />
